@@ -1,0 +1,2108 @@
+Terminals unused in grammar
+
+    T_NOT
+
+
+Grammar
+
+    0 $accept: P $end
+
+    1 P: T_INT T_MAIN '(' ')' '{' S '}'
+
+    2 S: VarDeclr ';' S
+    3  | AssignExpr ';' S
+    4  | T_IF '(' COND ')' '{' S '}' el S
+    5  | T_IF '(' COND ')' S
+    6  | T_IF '(' COND ')' '{' S '}' T_ELSE T_IF '(' COND ')' '{' S '}' el S
+    7  | T_WHILE '(' COND ')' '{' S '}' S
+    8  | T_WHILE '(' COND ')' S
+    9  | T_DO '{' S '}' T_WHILE '(' COND ')' ';' S
+   10  | T_FOR '(' FASS ';' COND ';' Update ')' '{' S '}' S
+   11  | Type T_ID '[' T_NUM ']' B ';' S
+   12  | Type T_ID '[' T_NUM ']' '=' '{' Arrayelements '}' ';' S
+   13  | T_SWITCH '(' D ')' '{' swt '}'
+   14  | ε
+   15  | error ';'
+
+   16 swt: T_CASE D ':' S T_BREAK ';' swt
+   17    | T_DEFAULT ':' S
+   18    | ε
+
+   19 D: T_ID
+   20  | T_NUM
+
+   21 el: T_ELSE '{' S '}'
+   22   | ε
+
+   23 Arrayelements: T_NUM ',' Arrayelements
+   24              | T_NUM
+
+   25 B: '[' T_NUM ']' B
+   26  | ε
+
+   27 Update: T_ID M
+   28       | M T_ID
+   29       | AssignExpr
+
+   30 M: T_INC
+   31  | T_DEC
+
+   32 COND: E
+
+   33 FASS: AssignExpr
+   34     | AssignExpr ',' FASS
+
+   35 AssignExpr: Type T_ID '=' E
+   36           | T_ID '=' E
+   37           | Type T_ID '=' T_CHAR_QUOTE T_ID T_CHAR_QUOTE
+   38           | T_ID '=' T_CHAR_QUOTE T_ID T_CHAR_QUOTE
+
+   39 E: E '+' T
+   40  | E '-' T
+   41  | E REL T
+   42  | E LOG T
+   43  | T
+
+   44 REL: '>'
+   45    | '<'
+   46    | T_LE
+   47    | T_GE
+   48    | T_NE
+   49    | T_EQ
+
+   50 LOG: T_AND
+   51    | T_OR
+   52    | '!'
+
+   53 T: T '*' F
+   54  | T '/' F
+   55  | T '%' F
+   56  | F
+
+   57 F: '(' E ')'
+   58  | T_ID
+   59  | T_NUM
+
+   60 VarDeclr: Type ListVar
+
+   61 Type: T_INT
+   62     | T_FLOAT
+   63     | T_CHAR
+   64     | T_DOUBLE
+
+   65 ListVar: T_ID
+   66        | T_ID ',' ListVar
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '!' (33) 52
+    '%' (37) 55
+    '(' (40) 1 4 5 6 7 8 9 10 13 57
+    ')' (41) 1 4 5 6 7 8 9 10 13 57
+    '*' (42) 53
+    '+' (43) 39
+    ',' (44) 23 34 66
+    '-' (45) 40
+    '/' (47) 54
+    ':' (58) 16 17
+    ';' (59) 2 3 9 10 11 12 15 16
+    '<' (60) 45
+    '=' (61) 12 35 36 37 38
+    '>' (62) 44
+    '[' (91) 11 12 25
+    ']' (93) 11 12 25
+    '{' (123) 1 4 6 7 9 10 12 13 21
+    '}' (125) 1 4 6 7 9 10 12 13 21
+    error (256) 15
+    T_ID <sval> (258) 11 12 19 27 28 35 36 37 38 58 65 66
+    T_NUM <sval> (259) 11 12 20 23 24 25 59
+    T_INT (260) 1 61
+    T_FLOAT (261) 62
+    T_CHAR (262) 63
+    T_DOUBLE (263) 64
+    T_IF (264) 4 5 6
+    T_WHILE (265) 7 8 9
+    T_FOR (266) 10
+    T_DO (267) 9
+    T_ELSE (268) 6 21
+    T_SWITCH (269) 13
+    T_CASE (270) 16
+    T_BREAK (271) 16
+    T_DEFAULT (272) 17
+    T_MAIN (273) 1
+    T_LE (274) 46
+    T_GE (275) 47
+    T_NE (276) 48
+    T_EQ (277) 49
+    T_AND (278) 50
+    T_OR (279) 51
+    T_NOT (280)
+    T_INC (281) 30
+    T_DEC (282) 31
+    T_CHAR_QUOTE (283) 37 38
+
+
+Nonterminals, with rules where they appear
+
+    $accept (47)
+        on left: 0
+    P (48)
+        on left: 1
+        on right: 0
+    S (49)
+        on left: 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+        on right: 1 2 3 4 5 6 7 8 9 10 11 12 16 17 21
+    swt (50)
+        on left: 16 17 18
+        on right: 13 16
+    D (51)
+        on left: 19 20
+        on right: 13 16
+    el (52)
+        on left: 21 22
+        on right: 4 6
+    Arrayelements (53)
+        on left: 23 24
+        on right: 12 23
+    B (54)
+        on left: 25 26
+        on right: 11 25
+    Update (55)
+        on left: 27 28 29
+        on right: 10
+    M (56)
+        on left: 30 31
+        on right: 27 28
+    COND (57)
+        on left: 32
+        on right: 4 5 6 7 8 9 10
+    FASS (58)
+        on left: 33 34
+        on right: 10 34
+    AssignExpr (59)
+        on left: 35 36 37 38
+        on right: 3 29 33 34
+    E (60)
+        on left: 39 40 41 42 43
+        on right: 32 35 36 39 40 41 42 57
+    REL (61)
+        on left: 44 45 46 47 48 49
+        on right: 41
+    LOG (62)
+        on left: 50 51 52
+        on right: 42
+    T (63)
+        on left: 53 54 55 56
+        on right: 39 40 41 42 43 53 54 55
+    F (64)
+        on left: 57 58 59
+        on right: 53 54 55 56
+    VarDeclr (65)
+        on left: 60
+        on right: 2
+    Type (66)
+        on left: 61 62 63 64
+        on right: 11 12 35 37 60
+    ListVar (67)
+        on left: 65 66
+        on right: 60 66
+
+
+State 0
+
+    0 $accept: • P $end
+
+    T_INT  shift, and go to state 1
+
+    P  go to state 2
+
+
+State 1
+
+    1 P: T_INT • T_MAIN '(' ')' '{' S '}'
+
+    T_MAIN  shift, and go to state 3
+
+
+State 2
+
+    0 $accept: P • $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    1 P: T_INT T_MAIN • '(' ')' '{' S '}'
+
+    '('  shift, and go to state 5
+
+
+State 4
+
+    0 $accept: P $end •
+
+    $default  accept
+
+
+State 5
+
+    1 P: T_INT T_MAIN '(' • ')' '{' S '}'
+
+    ')'  shift, and go to state 6
+
+
+State 6
+
+    1 P: T_INT T_MAIN '(' ')' • '{' S '}'
+
+    '{'  shift, and go to state 7
+
+
+State 7
+
+    1 P: T_INT T_MAIN '(' ')' '{' • S '}'
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    '}'  reduce using rule 14 (S)
+
+    S           go to state 19
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 8
+
+   15 S: error • ';'
+
+    ';'  shift, and go to state 23
+
+
+State 9
+
+   36 AssignExpr: T_ID • '=' E
+   38           | T_ID • '=' T_CHAR_QUOTE T_ID T_CHAR_QUOTE
+
+    '='  shift, and go to state 24
+
+
+State 10
+
+   61 Type: T_INT •
+
+    $default  reduce using rule 61 (Type)
+
+
+State 11
+
+   62 Type: T_FLOAT •
+
+    $default  reduce using rule 62 (Type)
+
+
+State 12
+
+   63 Type: T_CHAR •
+
+    $default  reduce using rule 63 (Type)
+
+
+State 13
+
+   64 Type: T_DOUBLE •
+
+    $default  reduce using rule 64 (Type)
+
+
+State 14
+
+    4 S: T_IF • '(' COND ')' '{' S '}' el S
+    5  | T_IF • '(' COND ')' S
+    6  | T_IF • '(' COND ')' '{' S '}' T_ELSE T_IF '(' COND ')' '{' S '}' el S
+
+    '('  shift, and go to state 25
+
+
+State 15
+
+    7 S: T_WHILE • '(' COND ')' '{' S '}' S
+    8  | T_WHILE • '(' COND ')' S
+
+    '('  shift, and go to state 26
+
+
+State 16
+
+   10 S: T_FOR • '(' FASS ';' COND ';' Update ')' '{' S '}' S
+
+    '('  shift, and go to state 27
+
+
+State 17
+
+    9 S: T_DO • '{' S '}' T_WHILE '(' COND ')' ';' S
+
+    '{'  shift, and go to state 28
+
+
+State 18
+
+   13 S: T_SWITCH • '(' D ')' '{' swt '}'
+
+    '('  shift, and go to state 29
+
+
+State 19
+
+    1 P: T_INT T_MAIN '(' ')' '{' S • '}'
+
+    '}'  shift, and go to state 30
+
+
+State 20
+
+    3 S: AssignExpr • ';' S
+
+    ';'  shift, and go to state 31
+
+
+State 21
+
+    2 S: VarDeclr • ';' S
+
+    ';'  shift, and go to state 32
+
+
+State 22
+
+   11 S: Type • T_ID '[' T_NUM ']' B ';' S
+   12  | Type • T_ID '[' T_NUM ']' '=' '{' Arrayelements '}' ';' S
+   35 AssignExpr: Type • T_ID '=' E
+   37           | Type • T_ID '=' T_CHAR_QUOTE T_ID T_CHAR_QUOTE
+   60 VarDeclr: Type • ListVar
+
+    T_ID  shift, and go to state 33
+
+    ListVar  go to state 34
+
+
+State 23
+
+   15 S: error ';' •
+
+    $default  reduce using rule 15 (S)
+
+
+State 24
+
+   36 AssignExpr: T_ID '=' • E
+   38           | T_ID '=' • T_CHAR_QUOTE T_ID T_CHAR_QUOTE
+
+    T_ID          shift, and go to state 35
+    T_NUM         shift, and go to state 36
+    T_CHAR_QUOTE  shift, and go to state 37
+    '('           shift, and go to state 38
+
+    E  go to state 39
+    T  go to state 40
+    F  go to state 41
+
+
+State 25
+
+    4 S: T_IF '(' • COND ')' '{' S '}' el S
+    5  | T_IF '(' • COND ')' S
+    6  | T_IF '(' • COND ')' '{' S '}' T_ELSE T_IF '(' COND ')' '{' S '}' el S
+
+    T_ID   shift, and go to state 35
+    T_NUM  shift, and go to state 36
+    '('    shift, and go to state 38
+
+    COND  go to state 42
+    E     go to state 43
+    T     go to state 40
+    F     go to state 41
+
+
+State 26
+
+    7 S: T_WHILE '(' • COND ')' '{' S '}' S
+    8  | T_WHILE '(' • COND ')' S
+
+    T_ID   shift, and go to state 35
+    T_NUM  shift, and go to state 36
+    '('    shift, and go to state 38
+
+    COND  go to state 44
+    E     go to state 43
+    T     go to state 40
+    F     go to state 41
+
+
+State 27
+
+   10 S: T_FOR '(' • FASS ';' COND ';' Update ')' '{' S '}' S
+
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+
+    FASS        go to state 45
+    AssignExpr  go to state 46
+    Type        go to state 47
+
+
+State 28
+
+    9 S: T_DO '{' • S '}' T_WHILE '(' COND ')' ';' S
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    '}'  reduce using rule 14 (S)
+
+    S           go to state 48
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 29
+
+   13 S: T_SWITCH '(' • D ')' '{' swt '}'
+
+    T_ID   shift, and go to state 49
+    T_NUM  shift, and go to state 50
+
+    D  go to state 51
+
+
+State 30
+
+    1 P: T_INT T_MAIN '(' ')' '{' S '}' •
+
+    $default  reduce using rule 1 (P)
+
+
+State 31
+
+    3 S: AssignExpr ';' • S
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    T_BREAK  reduce using rule 14 (S)
+    '}'      reduce using rule 14 (S)
+
+    S           go to state 52
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 32
+
+    2 S: VarDeclr ';' • S
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    T_BREAK  reduce using rule 14 (S)
+    '}'      reduce using rule 14 (S)
+
+    S           go to state 53
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 33
+
+   11 S: Type T_ID • '[' T_NUM ']' B ';' S
+   12  | Type T_ID • '[' T_NUM ']' '=' '{' Arrayelements '}' ';' S
+   35 AssignExpr: Type T_ID • '=' E
+   37           | Type T_ID • '=' T_CHAR_QUOTE T_ID T_CHAR_QUOTE
+   65 ListVar: T_ID •
+   66        | T_ID • ',' ListVar
+
+    '['  shift, and go to state 54
+    '='  shift, and go to state 55
+    ','  shift, and go to state 56
+
+    $default  reduce using rule 65 (ListVar)
+
+
+State 34
+
+   60 VarDeclr: Type ListVar •
+
+    $default  reduce using rule 60 (VarDeclr)
+
+
+State 35
+
+   58 F: T_ID •
+
+    $default  reduce using rule 58 (F)
+
+
+State 36
+
+   59 F: T_NUM •
+
+    $default  reduce using rule 59 (F)
+
+
+State 37
+
+   38 AssignExpr: T_ID '=' T_CHAR_QUOTE • T_ID T_CHAR_QUOTE
+
+    T_ID  shift, and go to state 57
+
+
+State 38
+
+   57 F: '(' • E ')'
+
+    T_ID   shift, and go to state 35
+    T_NUM  shift, and go to state 36
+    '('    shift, and go to state 38
+
+    E  go to state 58
+    T  go to state 40
+    F  go to state 41
+
+
+State 39
+
+   36 AssignExpr: T_ID '=' E •
+   39 E: E • '+' T
+   40  | E • '-' T
+   41  | E • REL T
+   42  | E • LOG T
+
+    T_LE   shift, and go to state 59
+    T_GE   shift, and go to state 60
+    T_NE   shift, and go to state 61
+    T_EQ   shift, and go to state 62
+    T_AND  shift, and go to state 63
+    T_OR   shift, and go to state 64
+    '+'    shift, and go to state 65
+    '-'    shift, and go to state 66
+    '>'    shift, and go to state 67
+    '<'    shift, and go to state 68
+    '!'    shift, and go to state 69
+
+    $default  reduce using rule 36 (AssignExpr)
+
+    REL  go to state 70
+    LOG  go to state 71
+
+
+State 40
+
+   43 E: T •
+   53 T: T • '*' F
+   54  | T • '/' F
+   55  | T • '%' F
+
+    '*'  shift, and go to state 72
+    '/'  shift, and go to state 73
+    '%'  shift, and go to state 74
+
+    $default  reduce using rule 43 (E)
+
+
+State 41
+
+   56 T: F •
+
+    $default  reduce using rule 56 (T)
+
+
+State 42
+
+    4 S: T_IF '(' COND • ')' '{' S '}' el S
+    5  | T_IF '(' COND • ')' S
+    6  | T_IF '(' COND • ')' '{' S '}' T_ELSE T_IF '(' COND ')' '{' S '}' el S
+
+    ')'  shift, and go to state 75
+
+
+State 43
+
+   32 COND: E •
+   39 E: E • '+' T
+   40  | E • '-' T
+   41  | E • REL T
+   42  | E • LOG T
+
+    T_LE   shift, and go to state 59
+    T_GE   shift, and go to state 60
+    T_NE   shift, and go to state 61
+    T_EQ   shift, and go to state 62
+    T_AND  shift, and go to state 63
+    T_OR   shift, and go to state 64
+    '+'    shift, and go to state 65
+    '-'    shift, and go to state 66
+    '>'    shift, and go to state 67
+    '<'    shift, and go to state 68
+    '!'    shift, and go to state 69
+
+    $default  reduce using rule 32 (COND)
+
+    REL  go to state 70
+    LOG  go to state 71
+
+
+State 44
+
+    7 S: T_WHILE '(' COND • ')' '{' S '}' S
+    8  | T_WHILE '(' COND • ')' S
+
+    ')'  shift, and go to state 76
+
+
+State 45
+
+   10 S: T_FOR '(' FASS • ';' COND ';' Update ')' '{' S '}' S
+
+    ';'  shift, and go to state 77
+
+
+State 46
+
+   33 FASS: AssignExpr •
+   34     | AssignExpr • ',' FASS
+
+    ','  shift, and go to state 78
+
+    $default  reduce using rule 33 (FASS)
+
+
+State 47
+
+   35 AssignExpr: Type • T_ID '=' E
+   37           | Type • T_ID '=' T_CHAR_QUOTE T_ID T_CHAR_QUOTE
+
+    T_ID  shift, and go to state 79
+
+
+State 48
+
+    9 S: T_DO '{' S • '}' T_WHILE '(' COND ')' ';' S
+
+    '}'  shift, and go to state 80
+
+
+State 49
+
+   19 D: T_ID •
+
+    $default  reduce using rule 19 (D)
+
+
+State 50
+
+   20 D: T_NUM •
+
+    $default  reduce using rule 20 (D)
+
+
+State 51
+
+   13 S: T_SWITCH '(' D • ')' '{' swt '}'
+
+    ')'  shift, and go to state 81
+
+
+State 52
+
+    3 S: AssignExpr ';' S •
+
+    $default  reduce using rule 3 (S)
+
+
+State 53
+
+    2 S: VarDeclr ';' S •
+
+    $default  reduce using rule 2 (S)
+
+
+State 54
+
+   11 S: Type T_ID '[' • T_NUM ']' B ';' S
+   12  | Type T_ID '[' • T_NUM ']' '=' '{' Arrayelements '}' ';' S
+
+    T_NUM  shift, and go to state 82
+
+
+State 55
+
+   35 AssignExpr: Type T_ID '=' • E
+   37           | Type T_ID '=' • T_CHAR_QUOTE T_ID T_CHAR_QUOTE
+
+    T_ID          shift, and go to state 35
+    T_NUM         shift, and go to state 36
+    T_CHAR_QUOTE  shift, and go to state 83
+    '('           shift, and go to state 38
+
+    E  go to state 84
+    T  go to state 40
+    F  go to state 41
+
+
+State 56
+
+   66 ListVar: T_ID ',' • ListVar
+
+    T_ID  shift, and go to state 85
+
+    ListVar  go to state 86
+
+
+State 57
+
+   38 AssignExpr: T_ID '=' T_CHAR_QUOTE T_ID • T_CHAR_QUOTE
+
+    T_CHAR_QUOTE  shift, and go to state 87
+
+
+State 58
+
+   39 E: E • '+' T
+   40  | E • '-' T
+   41  | E • REL T
+   42  | E • LOG T
+   57 F: '(' E • ')'
+
+    T_LE   shift, and go to state 59
+    T_GE   shift, and go to state 60
+    T_NE   shift, and go to state 61
+    T_EQ   shift, and go to state 62
+    T_AND  shift, and go to state 63
+    T_OR   shift, and go to state 64
+    ')'    shift, and go to state 88
+    '+'    shift, and go to state 65
+    '-'    shift, and go to state 66
+    '>'    shift, and go to state 67
+    '<'    shift, and go to state 68
+    '!'    shift, and go to state 69
+
+    REL  go to state 70
+    LOG  go to state 71
+
+
+State 59
+
+   46 REL: T_LE •
+
+    $default  reduce using rule 46 (REL)
+
+
+State 60
+
+   47 REL: T_GE •
+
+    $default  reduce using rule 47 (REL)
+
+
+State 61
+
+   48 REL: T_NE •
+
+    $default  reduce using rule 48 (REL)
+
+
+State 62
+
+   49 REL: T_EQ •
+
+    $default  reduce using rule 49 (REL)
+
+
+State 63
+
+   50 LOG: T_AND •
+
+    $default  reduce using rule 50 (LOG)
+
+
+State 64
+
+   51 LOG: T_OR •
+
+    $default  reduce using rule 51 (LOG)
+
+
+State 65
+
+   39 E: E '+' • T
+
+    T_ID   shift, and go to state 35
+    T_NUM  shift, and go to state 36
+    '('    shift, and go to state 38
+
+    T  go to state 89
+    F  go to state 41
+
+
+State 66
+
+   40 E: E '-' • T
+
+    T_ID   shift, and go to state 35
+    T_NUM  shift, and go to state 36
+    '('    shift, and go to state 38
+
+    T  go to state 90
+    F  go to state 41
+
+
+State 67
+
+   44 REL: '>' •
+
+    $default  reduce using rule 44 (REL)
+
+
+State 68
+
+   45 REL: '<' •
+
+    $default  reduce using rule 45 (REL)
+
+
+State 69
+
+   52 LOG: '!' •
+
+    $default  reduce using rule 52 (LOG)
+
+
+State 70
+
+   41 E: E REL • T
+
+    T_ID   shift, and go to state 35
+    T_NUM  shift, and go to state 36
+    '('    shift, and go to state 38
+
+    T  go to state 91
+    F  go to state 41
+
+
+State 71
+
+   42 E: E LOG • T
+
+    T_ID   shift, and go to state 35
+    T_NUM  shift, and go to state 36
+    '('    shift, and go to state 38
+
+    T  go to state 92
+    F  go to state 41
+
+
+State 72
+
+   53 T: T '*' • F
+
+    T_ID   shift, and go to state 35
+    T_NUM  shift, and go to state 36
+    '('    shift, and go to state 38
+
+    F  go to state 93
+
+
+State 73
+
+   54 T: T '/' • F
+
+    T_ID   shift, and go to state 35
+    T_NUM  shift, and go to state 36
+    '('    shift, and go to state 38
+
+    F  go to state 94
+
+
+State 74
+
+   55 T: T '%' • F
+
+    T_ID   shift, and go to state 35
+    T_NUM  shift, and go to state 36
+    '('    shift, and go to state 38
+
+    F  go to state 95
+
+
+State 75
+
+    4 S: T_IF '(' COND ')' • '{' S '}' el S
+    5  | T_IF '(' COND ')' • S
+    6  | T_IF '(' COND ')' • '{' S '}' T_ELSE T_IF '(' COND ')' '{' S '}' el S
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+    '{'       shift, and go to state 96
+
+    T_BREAK  reduce using rule 14 (S)
+    '}'      reduce using rule 14 (S)
+
+    S           go to state 97
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 76
+
+    7 S: T_WHILE '(' COND ')' • '{' S '}' S
+    8  | T_WHILE '(' COND ')' • S
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+    '{'       shift, and go to state 98
+
+    T_BREAK  reduce using rule 14 (S)
+    '}'      reduce using rule 14 (S)
+
+    S           go to state 99
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 77
+
+   10 S: T_FOR '(' FASS ';' • COND ';' Update ')' '{' S '}' S
+
+    T_ID   shift, and go to state 35
+    T_NUM  shift, and go to state 36
+    '('    shift, and go to state 38
+
+    COND  go to state 100
+    E     go to state 43
+    T     go to state 40
+    F     go to state 41
+
+
+State 78
+
+   34 FASS: AssignExpr ',' • FASS
+
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+
+    FASS        go to state 101
+    AssignExpr  go to state 46
+    Type        go to state 47
+
+
+State 79
+
+   35 AssignExpr: Type T_ID • '=' E
+   37           | Type T_ID • '=' T_CHAR_QUOTE T_ID T_CHAR_QUOTE
+
+    '='  shift, and go to state 55
+
+
+State 80
+
+    9 S: T_DO '{' S '}' • T_WHILE '(' COND ')' ';' S
+
+    T_WHILE  shift, and go to state 102
+
+
+State 81
+
+   13 S: T_SWITCH '(' D ')' • '{' swt '}'
+
+    '{'  shift, and go to state 103
+
+
+State 82
+
+   11 S: Type T_ID '[' T_NUM • ']' B ';' S
+   12  | Type T_ID '[' T_NUM • ']' '=' '{' Arrayelements '}' ';' S
+
+    ']'  shift, and go to state 104
+
+
+State 83
+
+   37 AssignExpr: Type T_ID '=' T_CHAR_QUOTE • T_ID T_CHAR_QUOTE
+
+    T_ID  shift, and go to state 105
+
+
+State 84
+
+   35 AssignExpr: Type T_ID '=' E •
+   39 E: E • '+' T
+   40  | E • '-' T
+   41  | E • REL T
+   42  | E • LOG T
+
+    T_LE   shift, and go to state 59
+    T_GE   shift, and go to state 60
+    T_NE   shift, and go to state 61
+    T_EQ   shift, and go to state 62
+    T_AND  shift, and go to state 63
+    T_OR   shift, and go to state 64
+    '+'    shift, and go to state 65
+    '-'    shift, and go to state 66
+    '>'    shift, and go to state 67
+    '<'    shift, and go to state 68
+    '!'    shift, and go to state 69
+
+    $default  reduce using rule 35 (AssignExpr)
+
+    REL  go to state 70
+    LOG  go to state 71
+
+
+State 85
+
+   65 ListVar: T_ID •
+   66        | T_ID • ',' ListVar
+
+    ','  shift, and go to state 56
+
+    $default  reduce using rule 65 (ListVar)
+
+
+State 86
+
+   66 ListVar: T_ID ',' ListVar •
+
+    $default  reduce using rule 66 (ListVar)
+
+
+State 87
+
+   38 AssignExpr: T_ID '=' T_CHAR_QUOTE T_ID T_CHAR_QUOTE •
+
+    $default  reduce using rule 38 (AssignExpr)
+
+
+State 88
+
+   57 F: '(' E ')' •
+
+    $default  reduce using rule 57 (F)
+
+
+State 89
+
+   39 E: E '+' T •
+   53 T: T • '*' F
+   54  | T • '/' F
+   55  | T • '%' F
+
+    '*'  shift, and go to state 72
+    '/'  shift, and go to state 73
+    '%'  shift, and go to state 74
+
+    $default  reduce using rule 39 (E)
+
+
+State 90
+
+   40 E: E '-' T •
+   53 T: T • '*' F
+   54  | T • '/' F
+   55  | T • '%' F
+
+    '*'  shift, and go to state 72
+    '/'  shift, and go to state 73
+    '%'  shift, and go to state 74
+
+    $default  reduce using rule 40 (E)
+
+
+State 91
+
+   41 E: E REL T •
+   53 T: T • '*' F
+   54  | T • '/' F
+   55  | T • '%' F
+
+    '*'  shift, and go to state 72
+    '/'  shift, and go to state 73
+    '%'  shift, and go to state 74
+
+    $default  reduce using rule 41 (E)
+
+
+State 92
+
+   42 E: E LOG T •
+   53 T: T • '*' F
+   54  | T • '/' F
+   55  | T • '%' F
+
+    '*'  shift, and go to state 72
+    '/'  shift, and go to state 73
+    '%'  shift, and go to state 74
+
+    $default  reduce using rule 42 (E)
+
+
+State 93
+
+   53 T: T '*' F •
+
+    $default  reduce using rule 53 (T)
+
+
+State 94
+
+   54 T: T '/' F •
+
+    $default  reduce using rule 54 (T)
+
+
+State 95
+
+   55 T: T '%' F •
+
+    $default  reduce using rule 55 (T)
+
+
+State 96
+
+    4 S: T_IF '(' COND ')' '{' • S '}' el S
+    6  | T_IF '(' COND ')' '{' • S '}' T_ELSE T_IF '(' COND ')' '{' S '}' el S
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    '}'  reduce using rule 14 (S)
+
+    S           go to state 106
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 97
+
+    5 S: T_IF '(' COND ')' S •
+
+    $default  reduce using rule 5 (S)
+
+
+State 98
+
+    7 S: T_WHILE '(' COND ')' '{' • S '}' S
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    '}'  reduce using rule 14 (S)
+
+    S           go to state 107
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 99
+
+    8 S: T_WHILE '(' COND ')' S •
+
+    $default  reduce using rule 8 (S)
+
+
+State 100
+
+   10 S: T_FOR '(' FASS ';' COND • ';' Update ')' '{' S '}' S
+
+    ';'  shift, and go to state 108
+
+
+State 101
+
+   34 FASS: AssignExpr ',' FASS •
+
+    $default  reduce using rule 34 (FASS)
+
+
+State 102
+
+    9 S: T_DO '{' S '}' T_WHILE • '(' COND ')' ';' S
+
+    '('  shift, and go to state 109
+
+
+State 103
+
+   13 S: T_SWITCH '(' D ')' '{' • swt '}'
+
+    T_CASE     shift, and go to state 110
+    T_DEFAULT  shift, and go to state 111
+
+    $default  reduce using rule 18 (swt)
+
+    swt  go to state 112
+
+
+State 104
+
+   11 S: Type T_ID '[' T_NUM ']' • B ';' S
+   12  | Type T_ID '[' T_NUM ']' • '=' '{' Arrayelements '}' ';' S
+
+    '['  shift, and go to state 113
+    '='  shift, and go to state 114
+
+    $default  reduce using rule 26 (B)
+
+    B  go to state 115
+
+
+State 105
+
+   37 AssignExpr: Type T_ID '=' T_CHAR_QUOTE T_ID • T_CHAR_QUOTE
+
+    T_CHAR_QUOTE  shift, and go to state 116
+
+
+State 106
+
+    4 S: T_IF '(' COND ')' '{' S • '}' el S
+    6  | T_IF '(' COND ')' '{' S • '}' T_ELSE T_IF '(' COND ')' '{' S '}' el S
+
+    '}'  shift, and go to state 117
+
+
+State 107
+
+    7 S: T_WHILE '(' COND ')' '{' S • '}' S
+
+    '}'  shift, and go to state 118
+
+
+State 108
+
+   10 S: T_FOR '(' FASS ';' COND ';' • Update ')' '{' S '}' S
+
+    T_ID      shift, and go to state 119
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_INC     shift, and go to state 120
+    T_DEC     shift, and go to state 121
+
+    Update      go to state 122
+    M           go to state 123
+    AssignExpr  go to state 124
+    Type        go to state 47
+
+
+State 109
+
+    9 S: T_DO '{' S '}' T_WHILE '(' • COND ')' ';' S
+
+    T_ID   shift, and go to state 35
+    T_NUM  shift, and go to state 36
+    '('    shift, and go to state 38
+
+    COND  go to state 125
+    E     go to state 43
+    T     go to state 40
+    F     go to state 41
+
+
+State 110
+
+   16 swt: T_CASE • D ':' S T_BREAK ';' swt
+
+    T_ID   shift, and go to state 49
+    T_NUM  shift, and go to state 50
+
+    D  go to state 126
+
+
+State 111
+
+   17 swt: T_DEFAULT • ':' S
+
+    ':'  shift, and go to state 127
+
+
+State 112
+
+   13 S: T_SWITCH '(' D ')' '{' swt • '}'
+
+    '}'  shift, and go to state 128
+
+
+State 113
+
+   25 B: '[' • T_NUM ']' B
+
+    T_NUM  shift, and go to state 129
+
+
+State 114
+
+   12 S: Type T_ID '[' T_NUM ']' '=' • '{' Arrayelements '}' ';' S
+
+    '{'  shift, and go to state 130
+
+
+State 115
+
+   11 S: Type T_ID '[' T_NUM ']' B • ';' S
+
+    ';'  shift, and go to state 131
+
+
+State 116
+
+   37 AssignExpr: Type T_ID '=' T_CHAR_QUOTE T_ID T_CHAR_QUOTE •
+
+    $default  reduce using rule 37 (AssignExpr)
+
+
+State 117
+
+    4 S: T_IF '(' COND ')' '{' S '}' • el S
+    6  | T_IF '(' COND ')' '{' S '}' • T_ELSE T_IF '(' COND ')' '{' S '}' el S
+
+    T_ELSE  shift, and go to state 132
+
+    $default  reduce using rule 22 (el)
+
+    el  go to state 133
+
+
+State 118
+
+    7 S: T_WHILE '(' COND ')' '{' S '}' • S
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    T_BREAK  reduce using rule 14 (S)
+    '}'      reduce using rule 14 (S)
+
+    S           go to state 134
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 119
+
+   27 Update: T_ID • M
+   36 AssignExpr: T_ID • '=' E
+   38           | T_ID • '=' T_CHAR_QUOTE T_ID T_CHAR_QUOTE
+
+    T_INC  shift, and go to state 120
+    T_DEC  shift, and go to state 121
+    '='    shift, and go to state 24
+
+    M  go to state 135
+
+
+State 120
+
+   30 M: T_INC •
+
+    $default  reduce using rule 30 (M)
+
+
+State 121
+
+   31 M: T_DEC •
+
+    $default  reduce using rule 31 (M)
+
+
+State 122
+
+   10 S: T_FOR '(' FASS ';' COND ';' Update • ')' '{' S '}' S
+
+    ')'  shift, and go to state 136
+
+
+State 123
+
+   28 Update: M • T_ID
+
+    T_ID  shift, and go to state 137
+
+
+State 124
+
+   29 Update: AssignExpr •
+
+    $default  reduce using rule 29 (Update)
+
+
+State 125
+
+    9 S: T_DO '{' S '}' T_WHILE '(' COND • ')' ';' S
+
+    ')'  shift, and go to state 138
+
+
+State 126
+
+   16 swt: T_CASE D • ':' S T_BREAK ';' swt
+
+    ':'  shift, and go to state 139
+
+
+State 127
+
+   17 swt: T_DEFAULT ':' • S
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    '}'  reduce using rule 14 (S)
+
+    S           go to state 140
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 128
+
+   13 S: T_SWITCH '(' D ')' '{' swt '}' •
+
+    $default  reduce using rule 13 (S)
+
+
+State 129
+
+   25 B: '[' T_NUM • ']' B
+
+    ']'  shift, and go to state 141
+
+
+State 130
+
+   12 S: Type T_ID '[' T_NUM ']' '=' '{' • Arrayelements '}' ';' S
+
+    T_NUM  shift, and go to state 142
+
+    Arrayelements  go to state 143
+
+
+State 131
+
+   11 S: Type T_ID '[' T_NUM ']' B ';' • S
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    T_BREAK  reduce using rule 14 (S)
+    '}'      reduce using rule 14 (S)
+
+    S           go to state 144
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 132
+
+    6 S: T_IF '(' COND ')' '{' S '}' T_ELSE • T_IF '(' COND ')' '{' S '}' el S
+   21 el: T_ELSE • '{' S '}'
+
+    T_IF  shift, and go to state 145
+    '{'   shift, and go to state 146
+
+
+State 133
+
+    4 S: T_IF '(' COND ')' '{' S '}' el • S
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    T_BREAK  reduce using rule 14 (S)
+    '}'      reduce using rule 14 (S)
+
+    S           go to state 147
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 134
+
+    7 S: T_WHILE '(' COND ')' '{' S '}' S •
+
+    $default  reduce using rule 7 (S)
+
+
+State 135
+
+   27 Update: T_ID M •
+
+    $default  reduce using rule 27 (Update)
+
+
+State 136
+
+   10 S: T_FOR '(' FASS ';' COND ';' Update ')' • '{' S '}' S
+
+    '{'  shift, and go to state 148
+
+
+State 137
+
+   28 Update: M T_ID •
+
+    $default  reduce using rule 28 (Update)
+
+
+State 138
+
+    9 S: T_DO '{' S '}' T_WHILE '(' COND ')' • ';' S
+
+    ';'  shift, and go to state 149
+
+
+State 139
+
+   16 swt: T_CASE D ':' • S T_BREAK ';' swt
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    T_BREAK  reduce using rule 14 (S)
+
+    S           go to state 150
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 140
+
+   17 swt: T_DEFAULT ':' S •
+
+    $default  reduce using rule 17 (swt)
+
+
+State 141
+
+   25 B: '[' T_NUM ']' • B
+
+    '['  shift, and go to state 113
+
+    $default  reduce using rule 26 (B)
+
+    B  go to state 151
+
+
+State 142
+
+   23 Arrayelements: T_NUM • ',' Arrayelements
+   24              | T_NUM •
+
+    ','  shift, and go to state 152
+
+    $default  reduce using rule 24 (Arrayelements)
+
+
+State 143
+
+   12 S: Type T_ID '[' T_NUM ']' '=' '{' Arrayelements • '}' ';' S
+
+    '}'  shift, and go to state 153
+
+
+State 144
+
+   11 S: Type T_ID '[' T_NUM ']' B ';' S •
+
+    $default  reduce using rule 11 (S)
+
+
+State 145
+
+    6 S: T_IF '(' COND ')' '{' S '}' T_ELSE T_IF • '(' COND ')' '{' S '}' el S
+
+    '('  shift, and go to state 154
+
+
+State 146
+
+   21 el: T_ELSE '{' • S '}'
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    '}'  reduce using rule 14 (S)
+
+    S           go to state 155
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 147
+
+    4 S: T_IF '(' COND ')' '{' S '}' el S •
+
+    $default  reduce using rule 4 (S)
+
+
+State 148
+
+   10 S: T_FOR '(' FASS ';' COND ';' Update ')' '{' • S '}' S
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    '}'  reduce using rule 14 (S)
+
+    S           go to state 156
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 149
+
+    9 S: T_DO '{' S '}' T_WHILE '(' COND ')' ';' • S
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    T_BREAK  reduce using rule 14 (S)
+    '}'      reduce using rule 14 (S)
+
+    S           go to state 157
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 150
+
+   16 swt: T_CASE D ':' S • T_BREAK ';' swt
+
+    T_BREAK  shift, and go to state 158
+
+
+State 151
+
+   25 B: '[' T_NUM ']' B •
+
+    $default  reduce using rule 25 (B)
+
+
+State 152
+
+   23 Arrayelements: T_NUM ',' • Arrayelements
+
+    T_NUM  shift, and go to state 142
+
+    Arrayelements  go to state 159
+
+
+State 153
+
+   12 S: Type T_ID '[' T_NUM ']' '=' '{' Arrayelements '}' • ';' S
+
+    ';'  shift, and go to state 160
+
+
+State 154
+
+    6 S: T_IF '(' COND ')' '{' S '}' T_ELSE T_IF '(' • COND ')' '{' S '}' el S
+
+    T_ID   shift, and go to state 35
+    T_NUM  shift, and go to state 36
+    '('    shift, and go to state 38
+
+    COND  go to state 161
+    E     go to state 43
+    T     go to state 40
+    F     go to state 41
+
+
+State 155
+
+   21 el: T_ELSE '{' S • '}'
+
+    '}'  shift, and go to state 162
+
+
+State 156
+
+   10 S: T_FOR '(' FASS ';' COND ';' Update ')' '{' S • '}' S
+
+    '}'  shift, and go to state 163
+
+
+State 157
+
+    9 S: T_DO '{' S '}' T_WHILE '(' COND ')' ';' S •
+
+    $default  reduce using rule 9 (S)
+
+
+State 158
+
+   16 swt: T_CASE D ':' S T_BREAK • ';' swt
+
+    ';'  shift, and go to state 164
+
+
+State 159
+
+   23 Arrayelements: T_NUM ',' Arrayelements •
+
+    $default  reduce using rule 23 (Arrayelements)
+
+
+State 160
+
+   12 S: Type T_ID '[' T_NUM ']' '=' '{' Arrayelements '}' ';' • S
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    T_BREAK  reduce using rule 14 (S)
+    '}'      reduce using rule 14 (S)
+
+    S           go to state 165
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 161
+
+    6 S: T_IF '(' COND ')' '{' S '}' T_ELSE T_IF '(' COND • ')' '{' S '}' el S
+
+    ')'  shift, and go to state 166
+
+
+State 162
+
+   21 el: T_ELSE '{' S '}' •
+
+    $default  reduce using rule 21 (el)
+
+
+State 163
+
+   10 S: T_FOR '(' FASS ';' COND ';' Update ')' '{' S '}' • S
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    T_BREAK  reduce using rule 14 (S)
+    '}'      reduce using rule 14 (S)
+
+    S           go to state 167
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 164
+
+   16 swt: T_CASE D ':' S T_BREAK ';' • swt
+
+    T_CASE     shift, and go to state 110
+    T_DEFAULT  shift, and go to state 111
+
+    $default  reduce using rule 18 (swt)
+
+    swt  go to state 168
+
+
+State 165
+
+   12 S: Type T_ID '[' T_NUM ']' '=' '{' Arrayelements '}' ';' S •
+
+    $default  reduce using rule 12 (S)
+
+
+State 166
+
+    6 S: T_IF '(' COND ')' '{' S '}' T_ELSE T_IF '(' COND ')' • '{' S '}' el S
+
+    '{'  shift, and go to state 169
+
+
+State 167
+
+   10 S: T_FOR '(' FASS ';' COND ';' Update ')' '{' S '}' S •
+
+    $default  reduce using rule 10 (S)
+
+
+State 168
+
+   16 swt: T_CASE D ':' S T_BREAK ';' swt •
+
+    $default  reduce using rule 16 (swt)
+
+
+State 169
+
+    6 S: T_IF '(' COND ')' '{' S '}' T_ELSE T_IF '(' COND ')' '{' • S '}' el S
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    '}'  reduce using rule 14 (S)
+
+    S           go to state 170
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 170
+
+    6 S: T_IF '(' COND ')' '{' S '}' T_ELSE T_IF '(' COND ')' '{' S • '}' el S
+
+    '}'  shift, and go to state 171
+
+
+State 171
+
+    6 S: T_IF '(' COND ')' '{' S '}' T_ELSE T_IF '(' COND ')' '{' S '}' • el S
+
+    T_ELSE  shift, and go to state 172
+
+    $default  reduce using rule 22 (el)
+
+    el  go to state 173
+
+
+State 172
+
+   21 el: T_ELSE • '{' S '}'
+
+    '{'  shift, and go to state 146
+
+
+State 173
+
+    6 S: T_IF '(' COND ')' '{' S '}' T_ELSE T_IF '(' COND ')' '{' S '}' el • S
+
+    error     shift, and go to state 8
+    T_ID      shift, and go to state 9
+    T_INT     shift, and go to state 10
+    T_FLOAT   shift, and go to state 11
+    T_CHAR    shift, and go to state 12
+    T_DOUBLE  shift, and go to state 13
+    T_IF      shift, and go to state 14
+    T_WHILE   shift, and go to state 15
+    T_FOR     shift, and go to state 16
+    T_DO      shift, and go to state 17
+    T_SWITCH  shift, and go to state 18
+
+    T_BREAK  reduce using rule 14 (S)
+    '}'      reduce using rule 14 (S)
+
+    S           go to state 174
+    AssignExpr  go to state 20
+    VarDeclr    go to state 21
+    Type        go to state 22
+
+
+State 174
+
+    6 S: T_IF '(' COND ')' '{' S '}' T_ELSE T_IF '(' COND ')' '{' S '}' el S •
+
+    $default  reduce using rule 6 (S)
